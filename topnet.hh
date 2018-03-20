@@ -32,8 +32,9 @@
 #include "types.hh"
 #include <vector>
 #include <valarray>
+#include <array>
 
-//#define TRACE 4
+//#define TRACE 10
 #define MAX_TRACE 5
 #define ZBAR_OUT
 #define ZBAR_IN
@@ -288,13 +289,13 @@ int AssignDrainageFlows(const int Timestep, const int NumDrainage, const int Num
 int AssignPriorityOrder(const int NumUser, const int NumSource, const int NumRights, const int NumReservoir,
 	const int AllocationMode, int *DrainageOrder, const int NumDrainage,
 	int &NumUserSource, int &NumUserSourceReturn, const int NumReturnFlow);
-int atf(double &atff, const double trange, const int month, const Eigen::ArrayXd &dtbar, const double a, const double c);
+int atf(double &atff, const double trange, const int month, const std::vector<double> dtbar, const double a, const double c);
 
 int BalanceFlowsAtReservoirs(const int NumNode, const int NumLink, const int NumUser,
 	const int NumReservoir, Eigen::ArrayXd &ReservoirNetStorage);
 int BalanceFlowsAtStreamNodes(const int NumNode, const int NumLink, int *DrainageOrder,
 	const int NumDrainage, Eigen::ArrayXd &DrainageOutFlow);
-int bcparm(Eigen::ArrayXd &dtBar, double &bca, double &bcc, const std::string bcFile);
+int bcparm(std::vector<double> &dtBar, double &bca, double &bcc, const std::string bcFile);
 int BuildDrainageOrder(const int NumDrainage, int *DrainageOrder);
 int BuildLinkStructure(const int NumDrainage, const int NumUser, const int NumSource,
 	const int NumReturnFlow, const int NumReservoir, const int NumMeasuredFlowInfo, const int NumNode, int &NumLink);
@@ -318,7 +319,7 @@ int cliParam(double *xlat, double *xlong, double &stdlon, double *elevtg, double
 int CreateLink(int &NumLink, const std::string Title, const int LinkCode, const int IntExtCode,
 	const int USNode, const int DSNode, const double Flow, const int ReturnFlowID);
 int etall(const double xlat, const double xlong, const double stdlon, const double elevtg,
-	const Eigen::ArrayXd &dtbar, double &evap, const double temp, const double dewp, const double trange,
+	const std::vector<double> dtbar, double &evap, const double temp, const double dewp, const double trange,
 	const double elevsb, const double albedo, const double rlapse, const int sdate, const int shour,
 	const int dtsec, const int m, const int istep, int &iyear, int &month, int &iday,
 	int &ihr, int &imm, int &isec, double &hour1, const double tmin, const double tmax,
@@ -391,7 +392,7 @@ int snow(std::ofstream &snowOutFile, const Eigen::ArrayXd &temper, const double 
 	const double ddf, double &snowst, const long int dt, const int Nsub, const int m, const int js, const int it,
 	const int maxSlp, const int maxInt);
 int snowueb(const Eigen::ArrayXd &snowsitev, Eigen::ArrayXd &snowstatev1, const Eigen::ArrayXd &snowparam,
-    const int ndepletionpoints, double **dfc, const Eigen::Array<int,Eigen::Dynamic,1> &snowcontrol, const Eigen::ArrayXd &dtbar,
+    const int ndepletionpoints, double **dfc, const Eigen::Array<int,Eigen::Dynamic,1> &snowcontrol, const std::vector<double> dtbar,
 	const Eigen::ArrayXd &snowforcing, Eigen::ArrayXd &snowsurfacetemp1, Eigen::ArrayXd &snowaveragetemp1,
     const double timestep, const int nstepday, double &surfacewaterinput, double &snowevaporation,  //outputs (both in m/h)
     double &areafractionsnow, const int modelelement);

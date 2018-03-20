@@ -27,7 +27,7 @@ int qlif(double &qliff, const double ta, const double rh, const double tk, const
 double ablat(const double DimBaw, const int ndfc, double **dfc);
 int snowLSub(int &year, int &month, int &day, double &hour, const int dt,
 	const int nStep, Eigen::ArrayXXd &inpt, Eigen::ArrayXd &sitev, Eigen::ArrayXd &statev,
-	const Eigen::ArrayXd &param, Eigen::ArrayXi &iflag, const Eigen::ArrayXd &dtbar, const int nstepday,
+	const Eigen::ArrayXd &param, Eigen::ArrayXi &iflag, const std::vector<double> dtbar, const int nstepday,
     double &cump, double &cume, double &cummr, Eigen::ArrayXd &outv,
     Eigen::ArrayXd &tsbackup, Eigen::ArrayXd &tavebackup,
     const int ndepletionpoints, double **dfc, const int modelelement, const int jj);
