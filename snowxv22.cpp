@@ -36,7 +36,7 @@ using namespace Eigen;
 
 // **************READ Bristow Campbell Parameter values **************
 
-int bcparm(ArrayXd &dtBar, double &bca, double &bcc, const string bcFile)
+int bcparm(vector<double> &dtBar, double &bca, double &bcc, const string bcFile)
 {
 	istringstream line;
 	string inLine;
@@ -53,7 +53,7 @@ int bcparm(ArrayXd &dtBar, double &bca, double &bcc, const string bcFile)
 	while (inLine.length() > 1) {
 		line.str(inLine);
 		line >> month >> val;
-		dtBar(month-1) = val;
+		dtBar[month-1] = val;
 		getline(paramFile, inLine, '\n');
 	}
 	paramFile.close();
@@ -119,11 +119,11 @@ int lyear(const int year)
 //     to get the atmospheric transmissivity using the Bristow and Campbell
 //     (1984) approach
 
-int atf(double &atff, const double trange, const int month, const ArrayXd &dtbar, const double a, const double c)
+int atf(double &atff, const double trange, const int month, const vector<double> dtbar, const double a, const double c)
 {
 	double b;
 
-	b = 0.036*exp(-0.154*dtbar(month-1));
+	b = 0.036*exp(-0.154*dtbar[month-1]);
 	atff = a*(1.0 - exp(-b*pow(trange, c)));
 	//      write(6,*)trange,month,a,c,dtbar(month),atf
 	return 0;

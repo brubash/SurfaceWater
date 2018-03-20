@@ -30,13 +30,13 @@ using namespace Eigen;
 int et(const int iyear,  const int month,     const int iday,      const double hour1,
 	const double dt,     const double albedo, const double elevsb, const double elevtg,
     const double rlapse, const double temp,   const double dewp,   const double trange,
-    const double xlat,   const double xlong,  const double stdlon, const ArrayXd &dtbar,
+    const double xlat,   const double xlong,  const double stdlon, const vector<double> dtbar,
     double &ret,         const double tmin,   const double tmax,   const double wind2m, const int method);
 
 
 // **************************** etall() ****************************
 int etall(const double xlat, const double xlong, const double stdlon, const double elevtg,
-	const ArrayXd &dtbar, double &evap, const double temp, const double dewp, const double trange,
+	const vector<double> dtbar, double &evap, const double temp, const double dewp, const double trange,
 	const double elevsb, const double albedo, const double rlapse, const int sdate, const int shour,
 	const int dtsec, const int m, const int istep, int &iyear, int &month, int &iday,
 	int &ihr, int &imm, int &isec, double &hour1, const double tmin, const double tmax,
@@ -89,7 +89,7 @@ int etall(const double xlat, const double xlong, const double stdlon, const doub
 int et(const int iyear,  const int month,     const int iday,      const double hour1,
 	const double dt,     const double albedo, const double elevsb, const double elevtg,
     const double rlapse, const double temp,   const double dewp,   const double trange,
-    const double xlat,   const double xlong,  const double stdlon, const ArrayXd &dtbar,
+    const double xlat,   const double xlong,  const double stdlon, const vector<double> dtbar,
     double &ret,         const double tmin,   const double tmax,   const double wind2m, const int method)
 {
 	const double solcon = 4914.0;  // solar constant (4914 kJ/m^2/hr)

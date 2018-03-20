@@ -143,7 +143,7 @@ int calcts( double **Si,            const ArrayXXd &Sp,           double **Rp,  
     static ArrayXd snowforcing(Niv);
     static ArrayXd snowparam(Npar);
     static Array<int,Dynamic,1> snowcontrol(7);
-    static ArrayXd dtbar(12);
+    static vector<double> dtbar(12);
     static double *cump;
     static double *cume;
     static double *cummr;
@@ -200,7 +200,8 @@ int calcts( double **Si,            const ArrayXXd &Sp,           double **Rp,  
     for (i = 0; i < maxInt; i++) {
         quc[i] = 0.0;
     }
-    ArrayXXd bdtBarR(12,maxSlp);
+    //ArrayXXd bdtBarR(12,maxSlp);
+    vector<vector<double> > bdtBarR(maxSlp,vector<double>(12));   // maxSlp columns
     ArrayXXd zbar(maxSlp,nreg);
     snowst   = new double[maxSlp];
     q0       = new double[maxSlp];
@@ -562,7 +563,7 @@ int calcts( double **Si,            const ArrayXXd &Sp,           double **Rp,  
                     temper_temp = (bTmax[js-1][istep-1] + bTmin[js-1][istep-1])/2;
                 for (i = 0; i < 12; i++) {
                     for (j = 0; j < maxSlp; j++) {
-                        bdtBarR(i,j) = bdtBar[i][j];
+                        bdtBarR[j][i] = bdtBar[i][j];
                     }
                 }
                 sHour = 0;
@@ -574,9 +575,7 @@ int calcts( double **Si,            const ArrayXXd &Sp,           double **Rp,  
                 //  measurements recorded at the end of the time step (240000 for daily) but ET and snow computations
                 //  integrate from the start time over the time step.
                 elev = elevsb; // we are driving this using a basin average temperature, so it must be at basin average elev
-                ArrayXd bdtBarR1 = bdtBarR.col(js-1);
-                //cout << bdtBarR1.size() << endl;exit(0); // column is size 12
-                etall(bXlat[js-1], bXlon[js-1], stdlon, elev, bdtBarR1, PETsngl, temper_temp, dewp_temp,
+                etall(bXlat[js-1], bXlon[js-1], stdlon, elev, bdtBarR[js-1], PETsngl, temper_temp, dewp_temp,
                       trange_temp, elevsb, albedo, rlapse, sDate, sHour, interval, m, istep, iyear, month, iday, ihr,
                       imm, isec, hour1, bTmin[js-1][istep-1], bTmax[js-1][istep-1], wind2m[istep-1], ievap_method);
                 pet = PETsngl;
@@ -613,11 +612,10 @@ int calcts( double **Si,            const ArrayXXd &Sp,           double **Rp,  
                     ArrayXd snowstatev1 = snowstatev.col(js-1);	// a reference to a slice
                     ArrayXd snowsurfacetemp1 = snowsurfacetemp.col(js-1);
                     ArrayXd snowaveragetemp1 = snowaveragetemp.col(js-1);
-                    snowueb(snowsitev, snowstatev1, snowparam, ndepletionpoints, dfc, snowcontrol, bdtBarR1,
+                    snowueb(snowsitev, snowstatev1, snowparam, ndepletionpoints, dfc, snowcontrol, bdtBarR[js-1],
                             snowforcing, snowsurfacetemp1, snowaveragetemp1, timestep, nstepday,
                             surfacewaterinput, snowevaporation,  // outputs (both in m/h)
                             areafractionsnow, js);   // added js so that within snow one knows which element one is in for debugging
-
                     snowstatev.col(js-1) = snowstatev1;	// a reference to a slice
                     snowsurfacetemp.col(js-1) = snowsurfacetemp1;
                     snowaveragetemp.col(js-1) = snowaveragetemp1;

@@ -73,7 +73,7 @@ using namespace std;
 
 int snowLSub(int &year, int &month, int &day, double &hour, const int dt,
 	const int nStep, ArrayXXd &inpt, ArrayXd &sitev, ArrayXd &statev,
-	const ArrayXd &param, ArrayXi &iflag, const ArrayXd &dtbar, const int nstepday,
+	const ArrayXd &param, ArrayXi &iflag, const vector<double> dtbar, const int nstepday,
     double &cump, double &cume, double &cummr, ArrayXd &outv,
     ArrayXd &tsbackup, ArrayXd &tavebackup,
     const int ndepletionpoints, double **dfc, const int modelelement, const int jj)

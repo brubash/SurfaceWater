@@ -30,7 +30,7 @@ using namespace std;
 //   -  Bypasses calling of snow subroutine when there is no snow on the ground or no snow falling
 
 int snowueb(const ArrayXd &snowsitev, ArrayXd &snowstatev1, const ArrayXd &snowparam,
-    const int ndepletionpoints, double **dfc, const Array<int,Dynamic,1> &snowcontrol, const ArrayXd &dtbar,
+    const int ndepletionpoints, double **dfc, const Array<int,Dynamic,1> &snowcontrol, const vector<double> dtbar,
 	const ArrayXd &snowforcing, ArrayXd &snowsurfacetemp1, ArrayXd &snowaveragetemp1,
     const double timestep, const int nstepday, double &surfacewaterinput, double &snowevaporation,  //outputs (both in m/h)
     double &areafractionsnow, const int modelelement)
@@ -75,7 +75,7 @@ int snowueb(const ArrayXd &snowsitev, ArrayXd &snowstatev1, const ArrayXd &snowp
  	//   5 start date yyyymmdd
  	//   6 start time hhmmss
 
-	//      real dtbar(12)   monthly mean diurnal temperature ranges (C)
+	//  real dtbar(12)   monthly mean diurnal temperature ranges (C)
 	//	real snowforcing(1)  1:7  Forcing variables
  	//	1 airtemp (deg C)
  	//	2 precip (m/h)
